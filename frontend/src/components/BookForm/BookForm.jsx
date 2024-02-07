@@ -1,7 +1,8 @@
 import "./BookForm.css";
+import { addBook } from "../../redux/books/actionCreators";
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import addBook from "../../redux/books/actionCreators";
 
 export default function BookForm() {
   const [title, setTitle] = useState("");
@@ -12,7 +13,7 @@ export default function BookForm() {
     event.preventDefault();
 
     if (title && author) {
-      const book = { title: title, author: author };
+      const book = { id: uuidv4(), title: title, author: author };
       dispatch(addBook(book));
 
       setTitle("");
