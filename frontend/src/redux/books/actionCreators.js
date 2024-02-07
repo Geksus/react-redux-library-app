@@ -13,3 +13,9 @@ export function deleteBook(id) {
     payload: id,
   };
 }
+
+export function clearAllBooks() {
+  return {
+    type: actionTypes.CLEAR_ALL_BOOKS,
+  };
+}

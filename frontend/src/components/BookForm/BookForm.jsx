@@ -1,5 +1,6 @@
 import "./BookForm.css";
-import { addBook } from "../../redux/books/actionCreators";
+import booksData from "../../data/books.json";
+import { addBook, clearAllBooks } from "../../redux/books/actionCreators";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,6 +9,17 @@ export default function BookForm() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const dispatch = useDispatch();
+
+  function handleAddRandomBook() {
+    const randomIndex = Math.floor(Math.random() * booksData.length);
+    const randomBook = booksData[randomIndex];
+    const book = { ...randomBook, id: uuidv4() };
+    dispatch(addBook(book));
+  }
+
+  function handleClearAllBooks() {
+    dispatch(clearAllBooks());
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -44,6 +56,14 @@ export default function BookForm() {
           />
         </div>
         <button type="submit">Add book</button>
+        <br />
+        <button type="button" onClick={handleAddRandomBook}>
+          Add random book
+        </button>
+        <br />
+        <button type="button" onClick={handleClearAllBooks}>
+          Burn the library
+        </button>
       </form>
     </div>
   );

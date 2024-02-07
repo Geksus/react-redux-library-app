@@ -8,6 +8,8 @@ export default function booksReducer(state = initialState, action) {
       return [...state, action.payload];
     case actionTypes.DELETE_BOOK:
       return state.filter((book) => book.id !== action.payload);
+    case actionTypes.CLEAR_ALL_BOOKS:
+      return [];
     default:
       return state;
   }
