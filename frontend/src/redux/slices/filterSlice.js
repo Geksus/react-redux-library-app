@@ -12,9 +12,9 @@ const filterSlice = createSlice({
       // state.title = action.payload
     },
     setAuthorFilter: (state, action) => {
-      return { ...state, author: action.payload };
+      state.author = action.payload;
     },
-    resetFilters: (state) => {
+    resetFilters: () => {
       return initialState;
     },
   },
