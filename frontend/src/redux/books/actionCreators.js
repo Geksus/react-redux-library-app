@@ -19,3 +19,10 @@ export function clearAllBooks() {
     type: actionTypes.CLEAR_ALL_BOOKS,
   };
 }
+
+export function toggleFavorite(id) {
+  return {
+    type: actionTypes.TOGGLE_FAVORITE,
+    payload: id,
+  };
+}

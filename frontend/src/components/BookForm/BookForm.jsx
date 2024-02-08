@@ -13,7 +13,7 @@ export default function BookForm() {
   function handleAddRandomBook() {
     const randomIndex = Math.floor(Math.random() * booksData.length);
     const randomBook = booksData[randomIndex];
-    const book = { ...randomBook, id: uuidv4() };
+    const book = { ...randomBook, id: uuidv4(), isFavorite: false };
     dispatch(addBook(book));
   }
 
@@ -25,7 +25,12 @@ export default function BookForm() {
     event.preventDefault();
 
     if (title && author) {
-      const book = { id: uuidv4(), title: title, author: author };
+      const book = {
+        id: uuidv4(),
+        title: title,
+        author: author,
+        isFavorite: false,
+      };
       dispatch(addBook(book));
 
       setTitle("");
