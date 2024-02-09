@@ -1,5 +1,6 @@
 import "./BookForm.css";
 import booksData from "../../data/books.json";
+import axios from 'axios'
 import { addBook, clearAllBooks } from "../../redux/books/actionCreators";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +16,17 @@ export default function BookForm() {
     const randomBook = booksData[randomIndex];
     dispatch(addBook(createBookWithID(randomBook)));
   }
+
+  const handleAddRandomViaApi = async () => {
+    try {
+      const res = await axios.get('http://127.0.0.1:4000/random-book')
+      if (res?.data?.title && res?.data?.author) {
+        dispatch(addBook(createBookWithID(res.data)))
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  };
 
   function handleClearAllBooks() {
     dispatch(clearAllBooks());
@@ -58,6 +70,8 @@ export default function BookForm() {
         <button type="button" onClick={handleAddRandomBook}>
           Add random book
         </button>
+        <br />
+        <button type="button" onClick={handleAddRandomViaApi}>Random book via API</button>
         <br />
         <button type="button" onClick={handleClearAllBooks}>
           Burn the library
