@@ -1,6 +1,6 @@
 import "./BookList.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
+import { deleteBook, toggleFavorite } from "../../redux/slices/booksSlice";
 import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
 import {
   selectAuthorFilter,
@@ -43,7 +43,7 @@ export default function BookList() {
           filteredBooks.map((book, index) => (
             <li key={book.id}>
               <div className="book-info">
-                {++index}. {book.title} by <strong>{book.author}</strong>
+                {++index}. {book.title} by <strong>{book.author}</strong> ({book.source})
               </div>
               <div className="book-actions">
                 <span onClick={() => handleToggleFavorite(book.id)}>
