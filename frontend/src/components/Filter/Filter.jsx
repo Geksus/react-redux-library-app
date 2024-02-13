@@ -58,7 +58,7 @@ export default function Filter() {
           <span>Only favorite </span>
           <input
             type="checkbox"
-            onClick={handleOnlyFavoriteFilterChange}
+            onChange={handleOnlyFavoriteFilterChange}
             checked={onlyFavoriteFilter}
           />
         </div>
