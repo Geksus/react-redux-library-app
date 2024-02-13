@@ -18,6 +18,19 @@ export const fetchBook = createAsyncThunk(
   }
 );
 
+export const fetchDelayedBook = createAsyncThunk(
+  "books/fetchDelayedBook",
+  async (url, thunkAPI) => {
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error) {
+      thunkAPI.dispatch(setError(error.message));
+      throw error;
+    }
+  }
+);
+
 const booksSlice = createSlice({
   name: "books",
   initialState: initialState,
@@ -57,6 +70,14 @@ const booksSlice = createSlice({
         state.push(createBookWithID(action.payload, "API"));
       }
     });
+    builder.addCase(
+      fetchDelayedBook.fulfilled,
+      (state = initialState, action) => {
+        if (action.payload.title && action.payload.author) {
+          state.push(createBookWithID(action.payload, "API-Delayed"));
+        }
+      }
+    );
   },
 });
 

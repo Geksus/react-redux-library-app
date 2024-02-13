@@ -4,15 +4,18 @@ import {
   addBook,
   clearAllBooks,
   fetchBook,
+  fetchDelayedBook,
 } from "../../redux/slices/booksSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createBookWithID } from "../../utils/createBookWithID";
 import { setError } from "../../redux/slices/errorSlice";
+import { FaSpinner } from "react-icons/fa";
 
 export default function BookForm() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   function handleAddRandomBook() {
@@ -23,6 +26,17 @@ export default function BookForm() {
 
   function handleAddRandomViaApi() {
     dispatch(fetchBook("http://127.0.0.1:4000/random-book"));
+  }
+
+  async function handleAddRandomViaDelayedApi() {
+    try {
+      setIsLoading(true);
+      await dispatch(
+        fetchDelayedBook("http://127.0.0.1:4000/random-book-delayed")
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function handleClearAllBooks() {
@@ -70,8 +84,34 @@ export default function BookForm() {
           Add random book
         </button>
         <br />
-        <button type="button" onClick={handleAddRandomViaApi}>
-          Random book via API
+        <button
+          type="button"
+          onClick={handleAddRandomViaApi}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span>"Loading..."</span>
+              <FaSpinner className="spinner" />
+            </>
+          ) : (
+            "Random book via API"
+          )}
+        </button>
+        <br />
+        <button
+          type="button"
+          onClick={handleAddRandomViaDelayedApi}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span>"Loading..."</span>
+              <FaSpinner className="spinner" />
+            </>
+          ) : (
+            "Delayed book via API"
+          )}
         </button>
         <br />
         <button type="button" onClick={handleClearAllBooks}>
