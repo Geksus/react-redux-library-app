@@ -3,7 +3,7 @@ import booksData from "../../data/books.json";
 import {
   addBook,
   clearAllBooks,
-  thunkFunction,
+  fetchBook,
 } from "../../redux/slices/booksSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ export default function BookForm() {
   }
 
   function handleAddRandomViaApi() {
-    dispatch(thunkFunction);
+    dispatch(fetchBook());
   }
 
   function handleClearAllBooks() {
