@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createBookWithID } from "../../utils/createBookWithID";
+import { setError } from "../../redux/slices/errorSlice";
 
 export default function BookForm() {
   const [title, setTitle] = useState("");
@@ -36,6 +37,8 @@ export default function BookForm() {
 
       setTitle("");
       setAuthor("");
+    } else {
+      dispatch(setError("No title and author"));
     }
   }
 
